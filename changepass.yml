@@ -1,0 +1,11 @@
+---
+- name: changing password
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: change beri password
+    user:
+      name: beri
+      update_password: always
+      password: "{{ newpass | password_hash('sha512')}}"

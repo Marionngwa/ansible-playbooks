@@ -1,0 +1,6 @@
+---
+- name: using roles
+  hosts: ws
+  become: true
+  roles: 
+    - installs

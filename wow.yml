@@ -1,0 +1,16 @@
+---
+- name: touching a file
+  hosts: ws
+  become: yes
+
+  tasks:
+  - name: creating a file
+    file:
+      path: /home/ec2-user/file1
+      state: touch
+      mode: '0644'
+  - name: adding content to file
+    lineinfile:
+      path: /home/ec2-user/file1
+      regexp: '^we are going to succeed'
+      line: "We are making 6 figures"

@@ -1,0 +1,10 @@
+---
+- name: this is a directory
+  hosts: ws
+  become: yes
+
+  tasks: 
+    - name: create a directory
+      file:
+        path: /tmp/studyx
+        state: directory

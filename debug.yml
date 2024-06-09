@@ -1,0 +1,13 @@
+---
+- name: show output
+  hosts: ws
+  become: yes
+
+  tasks: 
+  - name: show what im doing
+    command: cat /etc/os-release
+    register: some_value
+
+  - name: display my output
+    debug:
+      var: some_value

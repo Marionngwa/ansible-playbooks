@@ -1,0 +1,16 @@
+--- 
+- name: fine a process and kill it
+  hosts: ws 
+ 
+
+  tasks:
+  - name: get running process from remote hosts
+    ignore_errors: yes
+    shell: "ps -few | grep top | awk '{print $2}'"
+    register: running_process
+
+  - name: kill running process
+    ignore_errors: yes
+    shell: " kill {{ item}}"
+    with_items: "{{ running_process.stdout_lines }}"
+     

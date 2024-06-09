@@ -1,0 +1,11 @@
+---
+# tasks file for installs
+- name: reducing my playbook 
+  yum: 
+    name: httpd
+    state: present
+
+- name: start the service
+  service:
+    name: httpd
+    state: started

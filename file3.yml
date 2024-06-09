@@ -1,0 +1,11 @@
+---
+- name: playbook
+  hosts: all
+  become: yes
+
+  tasks:
+    - name: create a file
+      file:
+        path: /tmp/studyx.txt
+        mode: 0777
+        state: touch

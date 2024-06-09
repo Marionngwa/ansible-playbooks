@@ -1,0 +1,13 @@
+---
+- name: installing some stuff
+  hosts: all
+  become: yes
+
+  tasks:
+  - name: install software
+    package: 
+      state: present
+      name: "{{ item }}"
+    loop:
+      - wget
+      - curl
