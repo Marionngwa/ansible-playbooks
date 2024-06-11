@@ -1,6 +1,6 @@
 pipeline {
     agent {
-        label 'agent-jenkins'
+        label 'agent-ansible'
     }
     stages {
         stage('transferring files') {
