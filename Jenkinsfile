@@ -12,12 +12,15 @@ pipeline {
             steps {
                 sh '''
                     # Clone the repository
-                    #git clone https://github.com/Marionngwa/ansible-playbooks.git
+                    git clone https://github.com/Marionngwa/ansible-playbooks.git
                     
                     # Change to the cloned repository directory
                     cd ansible-playbooks
                     
-                    # Transfer files to the Ansible server
+                    # Add the EC2 instance's SSH host key to known_hosts
+                    ssh-keyscan -H 54.162.22.98 >> ~/.ssh/known_hosts
+                    
+                    # Transfer files to the Ansible server using the specified private key
                     scp -i /home/ec2-user/ansible-key.pem -r * ec2-user@54.162.22.98:/home/ec2-user/ansible-dev
                 '''
             }
