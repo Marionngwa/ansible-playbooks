@@ -26,7 +26,7 @@ pipeline {
                     ssh-keyscan -H 54.162.22.98 >> ~/.ssh/known_hosts
                     
                     # Transfer files to the Ansible server using the specified private key
-                    scp -i /home/ec2-user/ansible-key.pem -r * ec2-user@54.162.22.98:/home/ec2-user/ansible-dev
+                    scp -i /home/ec2-user/ansible-key.pem -r -v * ec2-user@54.162.22.98:/home/ec2-user/ansible-dev
                 '''
             }
         }
