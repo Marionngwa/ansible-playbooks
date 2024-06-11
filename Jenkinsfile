@@ -18,7 +18,7 @@ pipeline {
                     cd ansible-playbooks
                     
                     # Transfer files to the Ansible server
-                    scp -r * ec2-user@54.162.22.98:/home/ec2-user/ansible-dev
+                    scp -i /home/ec2-user/ansible-key.pem -r * ec2-user@54.162.22.98:/home/ec2-user/ansible-dev
                 '''
             }
         }
