@@ -11,6 +11,11 @@ pipeline {
         stage('Transferring files from GitHub to Ansible server') {
             steps {
                 sh '''
+                    # Check if the directory exists and remove it if it does
+                    if [ -d "ansible-playbooks" ]; then
+                        rm -rf ansible-playbooks
+                    fi
+
                     # Clone the repository
                     git clone https://github.com/Marionngwa/ansible-playbooks.git
                     
