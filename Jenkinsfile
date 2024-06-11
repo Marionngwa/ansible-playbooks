@@ -5,7 +5,7 @@ pipeline {
     stages {
         stage('Testing the Agent') {
             steps {
-                sh 'ansible --version'
+                sh 'ansible all -m ping'
             }
         }
     }
