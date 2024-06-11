@@ -12,7 +12,7 @@ pipeline {
                             transfers: [sshTransfer(
                                 cleanRemote: false,
                                 excludes: '',
-                                execCommand: 'ls',
+                                execCommand: '',
                                 execTimeout: 120000,
                                 flatten: false,
                                 makeEmptyDirs: false,
@@ -21,7 +21,7 @@ pipeline {
                                 remoteDirectory: '/home/ec2-user/ansible-dev',
                                 remoteDirectorySDF: false,
                                 removePrefix: '',
-                                sourceFiles: '*'
+                                sourceFiles: 'path/to/your/files/*'
                             )],
                             usePromotionTimestamp: false,
                             useWorkspaceInPromotion: false,
