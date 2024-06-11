@@ -1,26 +1,33 @@
 pipeline {
-    agent any
-    
+    agent {
+        label 'agent-jenkins'
+    }
     stages {
-        stage('Fetch from GitHub') {
+        stage('transferring files') {
             steps {
-                // Clone the repository from GitHub
-                git 'https://github.com/Marionngwa/ansible-playbooks.git'
-            }
-        }
-        stage('Transfer to Ansible Server') {
-            steps {
-                // Use SSH key to transfer files to the Ansible server
                 script {
-                    def remoteDir = '/home/ec2-user/ansible-dev'
-                    def ansibleServer = [:]
-                    ansibleServer['host'] = '3.81.212.155'
-                    ansibleServer['user'] = 'ec2-user'
-                    ansibleServer['port'] = 22 // Or any other port you are using for SSH
-                    ansibleServer['key'] = readFile('/home/ec2-user/ansible-key.pem').trim()
-                    
-                    // Transfer files using scp with SSH key
-                    sshCommand remote: ansibleServer, command: "scp -r -i /tmp/id_rsa ./* ${ansibleServer['user']}@${ansibleServer['host']}:${remoteDir}"
+                    sshPublisher(
+                        publishers: [sshPublisherDesc(
+                            configName: 'ansible-jenkins',
+                            transfers: [sshTransfer(
+                                cleanRemote: false,
+                                excludes: '',
+                                execCommand: 'ls',
+                                execTimeout: 120000,
+                                flatten: false,
+                                makeEmptyDirs: false,
+                                noDefaultExcludes: false,
+                                patternSeparator: '[, ]+',
+                                remoteDirectory: '/home/ec2-user/ansible-dev',
+                                remoteDirectorySDF: false,
+                                removePrefix: '',
+                                sourceFiles: '*'
+                            )],
+                            usePromotionTimestamp: false,
+                            useWorkspaceInPromotion: false,
+                            verbose: false
+                        )]
+                    )
                 }
             }
         }
