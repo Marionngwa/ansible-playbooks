@@ -12,7 +12,7 @@ pipeline {
             steps {
                 sh '''
                     # Clone the repository
-                    git clone https://github.com/Marionngwa/ansible-playbooks.git
+                    #git clone https://github.com/Marionngwa/ansible-playbooks.git
                     
                     # Change to the cloned repository directory
                     cd ansible-playbooks
