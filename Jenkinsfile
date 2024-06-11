@@ -1,33 +1,27 @@
 pipeline {
-    agent {
-        label 'agent-ansible'
-    }
+    agent any
+    
     stages {
-        stage('Testing the Agent') {
+        stage('Fetch from GitHub') {
             steps {
-                sh 'ansible all -m ping'
+                // Clone the repository from GitHub
+                git 'https://github.com/Marionngwa/ansible-playbooks.git'
             }
         }
-        stage('Transferring files from GitHub to Ansible server') {
+        stage('Transfer to Ansible Server') {
             steps {
-                sh '''
-                    # Check if the directory exists and remove it if it does
-                    if [ -d "ansible-playbooks" ]; then
-                        rm -rf ansible-playbooks
-                    fi
-
-                    # Clone the repository
-                    git clone https://github.com/Marionngwa/ansible-playbooks.git
+                // Use SSH key to transfer files to the Ansible server
+                script {
+                    def remoteDir = '/home/ec2-user/ansible-dev'
+                    def ansibleServer = [:]
+                    ansibleServer['host'] = '3.81.212.155'
+                    ansibleServer['user'] = 'ec2-user'
+                    ansibleServer['port'] = 22 // Or any other port you are using for SSH
+                    ansibleServer['key'] = readFile('/home/ec2-user/ansible-key.pem').trim()
                     
-                    # Change to the cloned repository directory
-                    cd ansible-playbooks
-                    
-                    # Add the EC2 instance's SSH host key to known_hosts
-                    ssh-keyscan -H 54.162.22.98 >> ~/.ssh/known_hosts
-                    
-                    # Transfer files to the Ansible server using the specified private key
-                    scp -i /home/ec2-user/ansible-key.pem -r -v * ec2-user@54.162.22.98:/home/ec2-user/ansible-dev
-                '''
+                    // Transfer files using scp with SSH key
+                    sshCommand remote: ansibleServer, command: "scp -r -i /tmp/id_rsa ./* ${ansibleServer['user']}@${ansibleServer['host']}:${remoteDir}"
+                }
             }
         }
     }
