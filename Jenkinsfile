@@ -1,37 +1,28 @@
 pipeline {
     agent any
     stages {
-        // stage('Cloning files from GitHub repository') {
-        //     steps {
-        //         sh 'git clone https://github.com/Marionngwa/ansible-playbooks.git'
-        //     }
-        // }
-        
-        stage('Transfer the cloned files to the Ansible server') {
-            steps {
-                script {
-                    sshPublisher(publishers: [
+        stage('Transfer files'){
+            steps{
+                sshPublisher(
+                    publishers: [
                         sshPublisherDesc(
                             configName: 'agent-ansible', 
                             transfers: [
-                                sshTransfer(
-                                    sourceFiles: '**/*.yml,**/*.cfg', 
-                                    remoteDirectory: '/home/ec2-user/ansible-dev', // Remote base directory
-                                    execCommand: 'cd /home/ec2-user/ansible-dev && ansible-playbook dir.yml', 
-                                    execTimeout: 120000, 
-                                    flatten: false, 
-                                    makeEmptyDirs: false, 
-                                    noDefaultExcludes: false, 
-                                    patternSeparator: '[, ]+', 
-                                    removePrefix: '' 
-                                )
-                            ],
-                            usePromotionTimestamp: false, 
-                            useWorkspaceInPromotion: false, 
-                            verbose: false 
-                        )
-                    ])
-                }
+                            sshTransfer(
+                                cleanRemote: false, 
+                                excludes: '', 
+                                execCommand: 'ls', 
+                                execTimeout: 120000, 
+                                flatten: false, 
+                                makeEmptyDirs: false, 
+                                noDefaultExcludes: false, 
+                                patternSeparator: '[, ]+', 
+                                remoteDirectory: '', 
+                                remoteDirectorySDF: false, 
+                                removePrefix: '', 
+                                sourceFiles: '**/*.yml,**/*.cfg')], 
+                                usePromotionTimestamp: false, 
+                                useWorkspaceInPromotion: false, verbose: false)])
             }
         }
     }
