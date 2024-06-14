@@ -17,8 +17,8 @@ pipeline {
                             configName: 'ansible-server', 
                             transfers: [
                                 sshTransfer(
-                                    sourceFiles: '**/*.yml, **/*.cfg', 
-                                    remoteDirectory: '/home/ansible/deployments', // Remote base directory
+                                    sourceFiles: '**/*.yml,**/*.cfg', 
+                                    remoteDirectory: '/home/ec2-user/ansible-dev', // Remote base directory
                                     execCommand: 'cd /home/ec2-user/ansible-dev && ansible-playbook dir.yml', 
                                     execTimeout: 120000, 
                                     flatten: false, 
