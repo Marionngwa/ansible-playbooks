@@ -19,7 +19,7 @@ pipeline {
                                 sshTransfer(
                                     sourceFiles: '**/*.yml, **/*.cfg', 
                                     remoteDirectory: '/home/ansible/deployments', // Remote base directory
-                                    execCommand: 'cd /home/ec2-user/ansible-dev && ansible-playbook -m ping', 
+                                    execCommand: 'cd /home/ec2-user/ansible-dev && ansible-playbook dir.yml', 
                                     execTimeout: 120000, 
                                     flatten: false, 
                                     makeEmptyDirs: false, 
