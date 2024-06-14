@@ -1,7 +1,5 @@
 pipeline {
-    agent {
-        label 'agent-ansible'
-    }
+    agent any
     stages {
         // stage('Cloning files from GitHub repository') {
         //     steps {
