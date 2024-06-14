@@ -3,11 +3,11 @@ pipeline {
         label 'agent-ansible'
     }
     stages {
-        stage('Cloning files from GitHub repository') {
-            steps {
-                sh 'git clone https://github.com/Marionngwa/ansible-playbooks.git'
-            }
-        }
+        // stage('Cloning files from GitHub repository') {
+        //     steps {
+        //         sh 'git clone https://github.com/Marionngwa/ansible-playbooks.git'
+        //     }
+        // }
         
         stage('Transfer the cloned files to the Ansible server') {
             steps {
