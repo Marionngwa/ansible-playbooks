@@ -12,7 +12,7 @@ pipeline {
                 script {
                     sshPublisher(publishers: [
                         sshPublisherDesc(
-                            configName: 'ansible-server', 
+                            configName: 'agent-ansible', 
                             transfers: [
                                 sshTransfer(
                                     sourceFiles: '**/*.yml,**/*.cfg', 
