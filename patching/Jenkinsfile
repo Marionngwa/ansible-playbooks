@@ -1,0 +1,16 @@
+pipeline {
+    agent {
+        label 'agent-ansible'
+    }
+    triggers {
+        cron('0 0 1 * *') 
+    }
+    stages {
+        stage('Patching servers') {
+            steps {
+                dir('/home/ec2-user/patching')
+                sh 'ansible-playbook updates.yml'
+            }
+        }
+    }
+}

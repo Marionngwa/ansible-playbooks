@@ -1,0 +1,32 @@
+---
+- name: Deploy and restart application
+  hosts: all
+  become: yes
+  vars:
+    login: admin
+    passwd: AP6APkHxetchhfhHqpaawMctMhu
+    artifact_name: bioMedical-latest.jar
+    artifactory_url: "http://ec2-54-173-62-198.compute-1.amazonaws.com:8081/artifactory/geolocation/"
+    target_file_path: "geolocation/geolocation/bio_2.jar"  # Replace with actual path in Artifactory
+
+  tasks:
+    - name: Delete old artifact
+      become: yes
+      shell: rm -f /opt/qa/spg/*.jar
+      ignore_errors: yes
+
+    - name: Check if an app is running on port 8082 and kill it
+      become: yes
+      shell: |
+        lsof -ti :8082 | xargs kill -9
+      ignore_errors: yes
+
+    - name: Download the latest artifact from JFrog Artifactory
+      become: yes
+      command: curl -u {{ login }}:{{ passwd }} -O "{{ artifactory_url }}/{{ target_file_path }}/{{ artifact_name }}"
+      args:
+        creates: /opt/qa/spg/{{ artifact_name }}  # Skip download if file already exists
+
+    - name: Bring up the application in the background
+      become: yes
+      shell: nohup java -jar /opt/qa/spg/{{ artifact_name }} > /opt/qa/spg/spg.log 2>&1 &
