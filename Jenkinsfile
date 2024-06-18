@@ -24,7 +24,7 @@ pipeline {
                                 usePromotionTimestamp: false, 
                                 useWorkspaceInPromotion: false, verbose: false)])
             }
-        // }
+        }
         // stage('zip files and transfer them to my jfrog'){
         //     steps{
         //         sh '''
