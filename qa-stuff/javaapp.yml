@@ -7,8 +7,7 @@
     passwd: AP6APkHxetchhfhHqpaawMctMhu
     artifact_name: bioMedical-latest.jar
     artifactory_url: "http://ec2-54-173-62-198.compute-1.amazonaws.com:8081/artifactory/geolocation/"
-    target_file_path: "geolocation/geolocation/bio_2.jar"  # Replace with actual path in Artifactory
-
+    target_file_path: "geolocation/geolocation/bio_2.jar"  
   tasks:
     - name: Delete old artifact
       become: yes
@@ -25,7 +24,7 @@
       become: yes
       command: curl -u {{ login }}:{{ passwd }} -O "{{ artifactory_url }}/{{ target_file_path }}/{{ artifact_name }}"
       args:
-        creates: /opt/qa/spg/{{ artifact_name }}  # Skip download if file already exists
+        creates: /opt/qa/spg/{{ artifact_name }}  
 
     - name: Bring up the application in the background
       become: yes

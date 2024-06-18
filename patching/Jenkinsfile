@@ -9,7 +9,7 @@ pipeline {
         stage('Patching servers') {
             steps {
                 dir('/home/ec2-user/ansible-dev/patching') {
-                    // Steps inside this block will execute in /home/ec2-user/ansible-dev
+                    
                     sh 'ansible-playbook updates.yml'
                 }
             }
